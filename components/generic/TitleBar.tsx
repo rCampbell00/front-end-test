@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function TitleBar() {
     return (
-        <div className='flex items-center justify-center w-full bg-neutral-300 p-2 pb-4 mb-6'>
+        <div className='flex items-center justify-center w-full bg-neutral-300 p-2 pb-4'>
             <h1 className='text-4xl'>
                 planarific
             </h1>
