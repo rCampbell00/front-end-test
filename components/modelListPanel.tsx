@@ -1,15 +1,15 @@
 import React from 'react';
 import Image from 'next/image';
 
-type ModelPanelProps = {
+type ModelListPanelProps = {
     id: number;
     description: string;
     thumbnail: string;
 }
 
-export default function ModelPanel({id, description, thumbnail}: ModelPanelProps) {
+export default function ModelListPanel({id, description, thumbnail}: ModelListPanelProps) {
     return (
-        <div className='items-center w-11/12 bg-neutral-300 p-2 rounded'>
+        <div className='items-center  bg-neutral-300 p-2 rounded mb-2 ml-1 mt-2 mr-1'>
             <Image
                 src={"/static/images"+thumbnail}
                 alt={"Location Thumbnail"}
