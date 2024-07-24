@@ -6,13 +6,19 @@ import { CameraControls } from '@react-three/drei'
 export default function modelView() {
     const cameraControlRef = useRef<CameraControls | null>(null)
     return (
-        <Canvas>
-            <CameraControls ref={cameraControlRef} />
-            <ambientLight intensity={1} />
-            <mesh>
-                <boxGeometry />
-                <meshStandardMaterial color="hotpink" />
-            </mesh>
-        </Canvas>
+        <>
+            <Canvas>
+                <CameraControls ref={cameraControlRef} />
+                <ambientLight intensity={1} />
+                <mesh>
+                    <boxGeometry />
+                    <meshStandardMaterial color="hotpink" />
+                </mesh>
+            </Canvas>
+            <button type='button' className='absolute'
+            onClick={() => {cameraControlRef.current?.reset(true)}}>
+                Reset View
+            </button>
+        </>
     )
 }
