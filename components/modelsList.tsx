@@ -4,6 +4,10 @@ import ModelListPanel from "./modelListPanel";
 import refreshThumbnails from "@/actions/refreshThumbnails";
 import { useEffect, useState, useCallback } from "react";
 
+type ModelListProps = {
+    modelFunc: Function,
+}
+
 export type ModelThumbData = {
     id: number,
     description: string,
@@ -11,14 +15,13 @@ export type ModelThumbData = {
   };
   
 
-export default function ModelsList() {
+export default function ModelsList({modelFunc}: ModelListProps) {
     const [modelThumbs, setThumbs] = useState<ModelThumbData[]>();
-    const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [isError, setIsError] = useState(false)
+    const [isError, setIsError] = useState(false);
 
     const getThumbnails = useCallback(
-        async (signal: AbortSignal) => {
+        async () => {
             setIsLoading(true);
             setIsError(false);
             const thumbs = await refreshThumbnails();
@@ -28,9 +31,8 @@ export default function ModelsList() {
     );
 
     useEffect(() => {
-        const controller = new AbortController();
-        getThumbnails(controller.signal);
-        return () => controller.abort();
+        getThumbnails();
+        return;
       }, [getThumbnails]);
 
     return (
@@ -39,8 +41,10 @@ export default function ModelsList() {
   
             <div className="flex flex-col overflow-y-auto flex-gorw h-minus-title">
             {
-                isLoading ? <p>Loading...</p> : isError ? error : modelThumbs && 
-                modelThumbs.map(model => <ModelListPanel key={model.id} id={model.id} thumbnail={model.thumbnail} description={model.description}/>)
+                modelThumbs && 
+                modelThumbs.map(model => <ModelListPanel onClick={modelFunc}
+                    key={model.id} id={model.id} thumbnail={model.thumbnail} description={model.description}
+                    />)
             }    
             </div>
         </div>

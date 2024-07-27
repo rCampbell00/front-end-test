@@ -1,9 +1,15 @@
 import * as THREE from 'three'
-import React, { useRef, useState } from 'react'
+import React, { Suspense, useRef, useState } from 'react'
 import { Canvas, useFrame, ThreeElements } from '@react-three/fiber'
 import { CameraControls } from '@react-three/drei'
+import { ModelData } from '@/app/page'
+import LoadedGLTFModel from './loadedGLTFModel'
 
-export default function modelView() {
+type ModelViewProp = {
+    modelData: ModelData | undefined,
+}
+
+export default function ModelView({modelData}: ModelViewProp) {
     const cameraControlRef = useRef<CameraControls | null>(null)
     return (
         <div className='h-[calc(100vh-3rem)] overflow-hidden'>
@@ -14,10 +20,7 @@ export default function modelView() {
             <Canvas>
                 <CameraControls ref={cameraControlRef} />
                 <ambientLight intensity={1} />
-                <mesh>
-                    <boxGeometry />
-                    <meshStandardMaterial color="hotpink" />
-                </mesh>
+                {modelData ? <LoadedGLTFModel modelLink={modelData.model}/> : <></>}
             </Canvas>
         </div>
     )
