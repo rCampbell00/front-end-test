@@ -18,8 +18,7 @@ export default async function refreshThumbnails() {
     }).then((content) => {
         thumbnails = content;
         return thumbnails;
-    }).catch(() => {
-        thumbnails = [];
-        return thumbnails;
+    }).catch((e) => {
+        throw e;
     })
 }
