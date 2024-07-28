@@ -10,6 +10,7 @@ type ModelMetaProps = {
 }
 
 export default function ModelMeta({addressOne, addressTwo, city, state, postalCode}: ModelMetaProps) {
+
     const [metaShown, setMetaShown] = useState(true);
 
     const swapMetaState = () => {

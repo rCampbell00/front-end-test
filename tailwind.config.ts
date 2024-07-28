@@ -16,7 +16,11 @@ const config: Config = {
       height: {
         'minus-title': 'calc(100vh - 5.25rem)',
       },
+      colors: {
+        'planarific': '#e47f63',
+      }
     },
+    
   },
   plugins: [],
 };
