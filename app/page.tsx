@@ -41,7 +41,7 @@ export default function Page() {
         <TitleBar />
         <div className="flex">
           <ModelsList modelFunc={testFunc}/>
-          <ModelScreen modelData={modelData}/>
+          <ModelScreen modelData={modelData} isError={isError} isLoading={isLoading}/>
         </div>
       </>
 

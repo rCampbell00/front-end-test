@@ -13,10 +13,23 @@ export default function ModelView({modelData}: ModelViewProp) {
     const cameraControlRef = useRef<CameraControls | null>(null)
     return (
         <div className='h-[calc(100vh-3rem)] overflow-hidden'>
-            <button type='button' className='z-10'
-            onClick={() => {cameraControlRef.current?.reset(true)}}>
-                Reset View
-            </button>
+            <div className='flex flex-row'>
+                <button type='button' className='z-10 bg-planarific rounded-full p-2 mt-1 mr-5'
+                onClick={() => {cameraControlRef.current?.reset(true)}}>
+                    Reset View
+                </button>            
+                <p className='z-10 bg-planarific p-2 mt-1 w-fit'>
+                    Left click to rotate
+                </p>         
+                <p className='z-10 bg-planarific p-2 mt-1 w-fit'>
+                    Right click to pan
+                </p>       
+                <p className='z-10 bg-planarific p-2 mt-1 w-fit'>
+                    scroll to zoom
+                </p>
+            </div>
+
+
             <Canvas>
                 <CameraControls ref={cameraControlRef} />
                 <ambientLight intensity={1} />

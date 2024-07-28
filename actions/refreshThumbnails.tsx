@@ -10,12 +10,12 @@ export default async function refreshThumbnails() {
     return fetch('https://fedevtest.azurewebsites.net/v1/models', {
         method: "GET",
         headers: {"Authorization": `Bearer ${API_KEY}`}
-      }).then((response) => {
+    }).then((response) => {
         if (!response.ok) {
             throw new Error();
         }
         return response.json();
-      }).then((content) => {
+    }).then((content) => {
         thumbnails = content;
         return thumbnails;
     }).catch(() => {

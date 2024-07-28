@@ -2,6 +2,8 @@ import React from 'react';
 import Image from 'next/image';
 import { useEffect, useState, useCallback } from "react";
 import getThumbImage from '@/actions/getThumbImage';
+import ErrorMessage from './generic/ErrorMessage';
+import LoadingCircle from './generic/LoadingCircle';
 
 type ModelListPanelProps = {
     id: number;
@@ -20,10 +22,15 @@ export default function ModelListPanel({id, description, thumbnail, onClick}: Mo
         async () => {
             setIsLoading(true);
             setIsError(false);
-            const thumbSaved = await getThumbImage(id);
-            setThumbs(thumbSaved)
-            setIsLoading(false);
-        }, []
+            try {
+                const thumbSaved = await getThumbImage(id);
+                setThumbs(thumbSaved);
+            } catch (error) {
+                setIsError(true);
+            } finally {
+                setIsLoading(false);
+            }
+        }, [id]
     );
 
     useEffect(() => {
@@ -36,8 +43,12 @@ export default function ModelListPanel({id, description, thumbnail, onClick}: Mo
     }
     
     return (
-        <div className='items-center  bg-neutral-300 p-2 rounded mb-2 ml-1 mt-2 mr-1' onClick={handleClick}>
-            {savedThumb?
+        <div className='items-center  bg-neutral-300 p-2 rounded mb-2 ml-1 mt-2 mr-1' onClick={savedThumb ? handleClick : getThumbnails}>
+            {isError ? 
+            <ErrorMessage message='Unable to Load Model Thumbnail' retryFunc={getThumbnails}/>
+            : isLoading ? 
+            <LoadingCircle/> :
+            savedThumb ?
             <Image
             src={"/static/images"+thumbnail}
             alt={"Location Thumbnail"}
@@ -45,8 +56,22 @@ export default function ModelListPanel({id, description, thumbnail, onClick}: Mo
             height={640}
             />:<></>
             }
-
             <p>{description}</p>
         </div>
     )
 }
+
+/*
+    const getThumbnail = async() => {
+        setIsLoading(true);
+        setIsError(false);
+        try {
+            const thumbSaved = await getThumbImage(id);
+            setThumbs(thumbSaved);
+        } catch (error) {
+            setIsError(true);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+        */
